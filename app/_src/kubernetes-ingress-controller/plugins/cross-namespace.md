@@ -209,12 +209,12 @@ spec:
   to:
   - group: "configuration.konghq.com"
     kind: KongPlugin
-' | kubectl apply -n qyzylorda -f -
+' | kubectl apply -f -
 ```
 
 The results should look like:
 ```text
-referencegrant.gateway.networking.k8s.io/qyzylorda-plugin created
+referencegrant.gateway.networking.k8s.io/qyzylorda-rate-limit created
 ```
 
 Such ReferenceGrants allow the `from` resource (KongConsumers in the `qyzylorda`
@@ -230,26 +230,27 @@ KongPlugins:
 echo '
 ---
 apiVersion: configuration.konghq.com/v1
- kind: KongPlugin
- metadata:
-   name: rate-limit-aygerim
-   annotations:
-     kubernetes.io/ingress.class: kong
- config:
-   minute: 10
-   policy: local
- plugin: rate-limiting
+kind: KongPlugin
+metadata:
+  name: rate-limit-aygerim
+  annotations:
+    kubernetes.io/ingress.class: kong
+config:
+  minute: 10
+  policy: local
+plugin: rate-limiting
 ---
 apiVersion: configuration.konghq.com/v1
- kind: KongPlugin
- metadata:
-   name: rate-limit-rustem
-   annotations:
-     kubernetes.io/ingress.class: kong
- config:
-   minute: 5
-   policy: local
- plugin: rate-limiting
+kind: KongPlugin
+metadata:
+  name: rate-limit-rustem
+  annotations:
+    kubernetes.io/ingress.class: kong
+config:
+  minute: 5
+  policy: local
+plugin: rate-limiting
+' | kubectl apply -f - -n kualalumpur
 ```
 
 The result should look like:
