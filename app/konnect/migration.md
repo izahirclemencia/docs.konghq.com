@@ -34,16 +34,25 @@ a migration.
 
 ### Runtime Component Management
 
-When deploying {{site.base_gateway}} on-premisies, users choose between 
-traditional, hybrid, and db-less deployment topologies. Depending on the 
-chosen topology and scale requirements, gateway components are deployed in 
-various configurations and node counts.
+{{site.base_gateway}} can be logically divided into two main components: 
+A Control Planes (CP) and Data Planes (DP). When deploying {{site.base_gateway}} on-premisies, 
+users choose between traditional, hybrid, and db-less deployment topologies. 
+Depending on the chosen topology and scale requirements, these gateway components 
+are deployed in various configurations and node counts. 
 
-When running {{site.base_gateway}} on Konnect, the gateway is deployed in a hybrid 
-topology, meaning the Control Plane (CP) and Data Planes (DP) are separated. 
+#### Control Plane Management
 
-With {{site.konnect_product_name}}, users can deploy lightweight virtual CPs that can
-be provisioned instantly and are fully managed by Kong.
+{{site.base_gateway}} supports Hybrid Mode deployments where the CP and DP are
+deployed separately and can be scaled independently. In the other deployment modes,
+the CP and DP are deployed together within the same node. 
+
+When running {{site.base_gateway}} on Konnect, the gateway is deployed in the hybrid 
+topology. Konnect provides users the ability to deploy lightweight virtual CPs that can
+be provisioned instantly and are fully managed by Kong. This frees users from the 
+operational toil of managing CPs and enables use cases that are harder with self 
+managed CPs.
+
+#### Data Plane Management
 
 On-premises deployments require users to self-manage Data Planes (DPs).
 
@@ -134,7 +143,7 @@ create your webhook to receive audit logs
 
 ### Deployment mode specifics
 
-Depending on your current deployment mode, you may
+Depending on your current deployment mode, you may have different migration paths.
 
 #### Traditional Mode
 
