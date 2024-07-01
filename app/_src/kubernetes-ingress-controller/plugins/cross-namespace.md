@@ -226,7 +226,7 @@ namespace) to interact with KongPlugins in the ReferenceGrant's namespace
 With the ReferenceGrant in place, Luka can create the `rate-limiting`
 KongPlugins:
 
-```
+```bash
 echo '
 ---
 apiVersion: configuration.konghq.com/v1
@@ -295,11 +295,13 @@ kongplugin.configuration.konghq.com/rate-limit-rustem created
 With the plugins in place, each namespace administrator can attach them to the
 resources in their respective namespaces.
 
-Kim attaches the plugins to the KongConsumers in `qyzylorda`:
+Kim attaches the plugins to the KongConsumers in `qyzylorda`. They use the
+`<namespace>:<kongplugin-resource-name>` format in the plugin name to indicate
+that the requested KongPlugin resides in another namespace:
 
 ```bash
-kubectl annotate kongconsumer aygerim -n qyzylorda konghq.com/plugins=rate-limit-aygerim
-kubectl annotate kongconsumer rustem -n qyzylorda konghq.com/plugins=rate-limit-rustem
+kubectl annotate kongconsumer aygerim -n qyzylorda konghq.com/plugins=kualalumpur:rate-limit-aygerim
+kubectl annotate kongconsumer rustem -n qyzylorda konghq.com/plugins=kualalumpur:rate-limit-rustem
 ``` 
 
 The result should look like:
@@ -312,7 +314,7 @@ kongconsumer.configuration.konghq.com/rustem annotated
 Luka attaches the plugins to the `httpbin` Service in `kualalumpur`:
 
 ```bash
-kubectl annotate service httpbin -n kualalumpur konghq.com/plugins=httpbin-basic-auth,rate-limit-aygerim,rate-limit-rustem
+kubectl annotate service httpbin --overwrite -n kualalumpur konghq.com/plugins=httpbin-basic-auth,rate-limit-aygerim,rate-limit-rustem
 ``` 
 
 Note that this command overrides the entire plugin annotation, so it needs to
