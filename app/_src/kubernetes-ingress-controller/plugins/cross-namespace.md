@@ -105,7 +105,7 @@ The result should look like:
 httproute.gateway.networking.k8s.io/bintang created
 ```
 
-Finally, create a authentication plugin and attach it to the Service:
+Create a authentication plugin:
 
 ```bash
 echo '
@@ -123,6 +123,7 @@ The result should look like:
 ```text
 kongplugin.configuration.konghq.com/httpbin-basic-auth created
 ``` 
+and attach it to the Service:
 
 ```bash
 kubectl annotate service httpbin -n kualalumpur konghq.com/plugins=httpbin-basic-auth
@@ -159,7 +160,7 @@ metadata:
 stringData:
     username: rustem
     password: rustem-password
-' | kubectl apply -n kyzlorda -f -
+' | kubectl apply -n qyzylorda -f -
 ```
 
 The results should look like:
@@ -170,9 +171,9 @@ secret/rustem-basic-auth created
 
 Create a consumers named `aygerim` and `rustem` that use these credentials:
 
-{% include /md/kic/consumer.md release=page.release name='aygerim' credName='aygerim-basic-auth' namespace='kyzlorda' %}
+{% include /md/kic/consumer.md release=page.release name='aygerim' credName='aygerim-basic-auth' namespace='qyzylorda' %}
 
-{% include /md/kic/consumer.md release=page.release name='rustem' credName='rustem-key-auth' namespace='kyzlorda' %}
+{% include /md/kic/consumer.md release=page.release name='rustem' credName='rustem-key-auth' namespace='qyzylorda' %}
 
 ## Grant cross-namespace permissions
 
@@ -203,7 +204,7 @@ spec:
   to:
   - group: "configuration.konghq.com"
     kind: KongPlugin
-' | kubectl apply -n kyzlorda -f -
+' | kubectl apply -n qyzylorda -f -
 ```
 
 The results should look like:
@@ -307,10 +308,6 @@ service/httpbin annotated
 ``` 
 
 ## Test the configuration
-
-> TODO $$PROXY_IP is maybe not available through the standalone getting started
-> guide, should check. May be stuck inserting the big setup preamble include
-> here.
 
 Send a request using the `aygerim` consumer:
 
