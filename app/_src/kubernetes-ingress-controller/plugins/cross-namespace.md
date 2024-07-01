@@ -23,7 +23,7 @@ Kim manages [consumers](/kubernetes-ingress-controller/{{page.release}}/referenc
 for Example Organization. They have permission to the `qyzylorda` namespace and
 creates consumers and credentials in it.
 
-Luka manages Example Organization's _httpbin_ Service in the `kualalumpur`
+Luka manages Example Organization's `httpbin` Service in the `kualalumpur`
 namespace. Luka wants to apply different rate limits to different consumers,
 but they do not have full access to the `qyzylorda` namespace, and Kim does not
 have access to the `kualalumpur` namespace. To manage these limits, Kim can
@@ -173,7 +173,12 @@ Create a consumers named `aygerim` and `rustem` that use these credentials:
 
 {% include /md/kic/consumer.md release=page.release name='aygerim' credName='aygerim-basic-auth' namespace='qyzylorda' %}
 
-{% include /md/kic/consumer.md release=page.release name='rustem' credName='rustem-key-auth' namespace='qyzylorda' %}
+{% include /md/kic/consumer.md release=page.release name='rustem' credName='rustem-basic-auth' namespace='qyzylorda' %}
+
+> TODO the addition of namespace here doesn't appear to be taking, and also
+> something horrible is happening between the import and markdown handling,
+> where the imported code blocks and prose are all being wrapped in code blocks
+> for the final render. Import caching maybe screwy?
 
 ## Grant cross-namespace permissions
 
@@ -273,6 +278,18 @@ kongplugin.configuration.konghq.com/rate-limit-rustem created
 > after (the missing plugins will be ignored AFAIK), but the level of knowledge
 > you need to not trigger badness is obscene and rather unintuitive. Hurray
 > conflicting models!
+
+{:.note}
+> In practice, you would likely not manually apply plugin configuration first
+> to the KongConsumers and second to the Services while they are live, as doing
+> so creates a window of time where the limits apply to _all_ requests from
+> those consumers, not just requests to the relevant Service. This guide does
+> so to demonstrate creation of the necessary configuration in separate steps.
+>
+> In a real-world scenario, you should consider either managing configuration
+> out of band (via externally-managed configuration deployed to the cluster via
+> a continuous deployment system), during an outage window, or before the
+> services or consumers are put into live use.
 
 With the plugins in place, each namespace administrator can attach them to the
 resources in their respective namespaces.
