@@ -114,7 +114,7 @@ Just like in on-premises deployments, the custom plugin code must be distributed
 but currently require a manual deployment process involving Kong Gateway's support personal. Contact your Kong representative
 for more information.
 
-### Migrating {{site.base_gateway}} Configuration
+### {{site.base_gateway}} Configuration
 
 Typically the {{site.base_gateway}} configuration is migrated to {{site.konnect_product_name}} 
 using [decK](/deck/latest/guides/konnect/), the declarative management tool for {{site.base_gateway}}
@@ -137,27 +137,43 @@ for migrating your configuration looks like the following:
 
   `deck gateway sync --konnect-token $KONNECT_PATH --control-plane-name <cp-name> <workspace>.yaml`
 
--- List potential failure modes
-
 In addition to the above process of using decK for the migration, {{site.konneect_product_name}} provides
 other options for migrating your configuration.
 
 * [Konnect Control Planes Config](/konnect/api/control-plane-configuration/latest/)
 * [Kong Konnect Terraform Provider](/konnect/reference/terraform/)
 
-### Data Plane Migration to Konnect
+### Data planes
 
-* How to attach a new DP to Konnect
-* How to take a running DP and switch it's data source to Konnect
+The recommended approach for migrating your data plane instances to {{site.konnect_product_name}} is to
+create new data plane instances connected to your Control Plane, validate their configuration and connectivity,
+and then decomission the on-premises data plane instances.
 
-### APIOps Migration
+The {{site.konnect_product_name}} documentation provides details on 
+[{{site.base_gateway}} installation options](/konnect/gateway-manager/data-plane-nodes/). The easiest
+way to deploy new data planes is using the Konnect Gateway Manager, which provides integrated 
+launchers for popular operating systems and compute platforms. 
 
-* What information can we provide to a general audience with this?
+### APIOps
 
-## Migration next steps and additional resources
+Konnect users will find that there are additional options for managing the API deployment lifecycle on
+compared to {{site.base_gateway}} on-premises. 
 
-* https://docs.konghq.com/konnect/getting-started/import/
+If you're using [deck](/deck/latest) to manage your {{site.base_gateway}} configuration, you can continue to use
+the tool to managing your {{site.konnect_product_name}} configuration. The decK CLI 
+[supports Konnect Control Plane configuration](https://docs.konghq.com/deck/latest/guides/konnect/)
+by providing additional flags that configure the tool to connect to a particular Control Plane using access tokens.
 
-If  you are interested in assistence with migrating from Kong Gateway to 
+Additionally, {{site.konnect_product_name}} provides a Terraform provider for managing a full Konnect deployment 
+including Control Planes, Control Plane Groups, data plane configuration and more. The 
+[Kong Konnect Terraform Provider](https://docs.konghq.com/konnect/reference/terraform/) can be used independently
+or in conjunction with decK to manage your API deployment lifecycle.
+
+The [Kong Gateway Operator](/gateway-operator/latest/) is also available for teams 
+that desire to use standardized Kubernetes APIs to manage their Konnect deployments.
+
+## Next steps
+
+If you are interested in assistence with migrating from {{site.base_gateway}} on-premises to 
 {{site.konnect_product_name}}, please contact a Kong field representative.
 
